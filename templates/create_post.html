@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <center><h1>Add a Blog Entry</h1></center>
+    <center><h1>Add a blog entry</h1></center>
 
     <form method='post' action='/newpost'>
         <label>
@@ -13,6 +13,10 @@
 
         <input type="text" name='blog-title' />
 
+        {% if title_error %}
+        <span class="error">{{ title_error }}</span>
+        {% endif %}
+
         <br><br>
 
         <label>
@@ -22,6 +26,10 @@
         <br>
 
             <textarea name="blog-body"></textarea>
+            {% if body_error %}
+            <span class="error">{{ body_error }}</span>
+            {% endif %}
+
         <br><br>
 
         <input type="submit" value='Add Entry' />

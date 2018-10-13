@@ -2,18 +2,17 @@
 
 {% block content %}
 
-    <center><h1>Build a Blog</h1></center>
-    
-    {% if posts|length == 0 %}
-    <p>No posts yet</p>
-    {% else %}
+    <center><h1>{{title}}</h1></center>
 
-        <ul>
-            {% for post in posts %}
-            <li>{{ posts }}</li>
+            {% for blog in blog_posts: %}
+            <ul>
+              <li>
+                <span>
+                  {{ blog.created_at }}
+                  <a href="/blog?id={{ blog.id }}">{{ blog.title }}</a>
+                </span>
+              </li>
+            </ul>
             {% endfor %}
-        </ul>
-
-    {% endif %}
 
 {% endblock %}
