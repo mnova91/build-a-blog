@@ -16,8 +16,9 @@ class Blog(db.Model):
 
     def __init__(self, title, body):
         self.title = title
+        self.body = body
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET'])
 def index():
 
     return render_template('post_list.html',title="Build-a-blog")
@@ -25,14 +26,17 @@ def index():
 @app.route('/newpost', methods=['POST', 'GET'])
 def create_new_post():
 
+    if request.method == 'GET':
+        return render_template('create_post.html')
+
     if request.method == 'POST':
-        blog_title = request.form['blog_title']
-        blog_content = request.form['blog_content']
+        blog_title = request.form['blog-title']
+        blog_content = request.form['blog-body']
         new_blog_post = Blog(blog_title,blog_content)
         db.session.add(new_blog_post)
         db.session.commit()        
 
-    return render_template('create_post.html' ,title="Build-a-blog")
+    return render_template('post_list.html' ,title="Build-a-blog")
 
 if __name__ == '__main__':
     app.run()
