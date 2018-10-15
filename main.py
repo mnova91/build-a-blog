@@ -49,19 +49,13 @@ def index():
 
     return render_template('post_list.html',title="Build-a-blog", blog_posts=blog_posts)
 
-@app.route('/blog', methods=['POST', 'GET'])
+@app.route('/blog', methods=['GET'])
 def list_post():
-
-    if request.method == 'POST':
-        blog_posts = Blog.query.all()
-        return render_template('post_list.html',title="Build-a-blog", blog_posts=blog_posts)
 
     if request.method == 'GET':
         blog_post_id = request.args.get('id')
         new_blog_post = Blog.query.filter_by(id=blog_post_id).first()
         return render_template('display_post.html', new_blog_post=new_blog_post)
-
-        
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def create_new_post():
@@ -76,7 +70,7 @@ def create_new_post():
         new_blog_post = Blog(blog_title,blog_content)
         db.session.add(new_blog_post)
         db.session.commit() 
-        return render_template('display_post.html', new_blog_post=new_blog_post)
+        return redirect(f'/blog?id={new_blog_post.id}')
 
     if len(blog_title) == 0 or len(blog_content) == 0:
         title_error = is_title_blank(blog_title)
